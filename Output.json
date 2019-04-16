@@ -1,0 +1,16 @@
+[
+  {
+    "priceFrom":3000,
+    "priceTo":20000,
+    "manufactorer":"DELL",
+    "screenSize":"23.1\"-24\"",
+    "resolution":"1920x1080"
+  },
+  {
+    "priceFrom":10000,
+    "priceTo":40000,
+    "manufactorer":"ASUS",
+    "screenSize":"24.1\"-27\"",
+    "resolution":"3840x2160"
+  }
+]
