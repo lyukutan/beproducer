@@ -5,13 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import ru.cinemico.HamcrestHelper;
+import ru.cinemico.test.actions.Checks;
 
 import java.util.List;
 
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
+import static ru.cinemico.HamcrestHelper.assertThat;
 
-public class MainPage {
+public class MainPage extends Checks {
     private WebDriver driver;
 
     public MainPage(WebDriver driver) {
@@ -54,17 +55,23 @@ public class MainPage {
 
     @Step("Проверка видимости полей")
     public MainPage checkEnabledFields(){
-        HamcrestHelper.assertThat("Проверка видимости логотипа", headerLogo.isEnabled());
-        HamcrestHelper.assertThat("Проверка видимости кнопки \"Вход\"",  entrance.isEnabled());
-        HamcrestHelper.assertThat("Проверка видимости кнопки \"Язык\"",  headerLanguages.isEnabled());
-        HamcrestHelper.assertThat("Проверка наличия кнопок \"swiper\"",  !swiperBullet.isEmpty());
-        HamcrestHelper.assertThat("Проверка наличия кнопок \"Кнопок на баннерах\"",  !buttonBanners.isEmpty());
-        HamcrestHelper.assertThat("Проверка наличия кнопок \"Footer Menu \"",  toLowerCase(footerMenuLink.get(0).getText()).equals("faq")
+        assertThat("Проверка видимости логотипа", headerLogo.isEnabled());
+        assertThat("Проверка видимости кнопки \"Вход\"",  entrance.isEnabled());
+        assertThat("Проверка видимости кнопки \"Язык\"",  headerLanguages.isEnabled());
+        assertThat("Проверка наличия кнопок \"swiper\"",  !swiperBullet.isEmpty());
+        assertThat("Проверка наличия кнопок \"Кнопок на баннерах\"",  !buttonBanners.isEmpty());
+        assertThat("Проверка наличия кнопок \"Footer Menu \"",  toLowerCase(footerMenuLink.get(0).getText()).equals("faq")
                 && toLowerCase(footerMenuLink.get(1).getText()).equals("новости и аналитика")
                 && toLowerCase(footerMenuLink.get(2).getText()).equals("связаться с нами")
                 && toLowerCase(footerMenuLink.get(3).getText()).equals("контакты"));
         ScreenshotHelper.makeScreenshot(driver);
         return new MainPage(driver);
+    }
+
+    @Step("Переход на форму авторизации")
+    public AuthorizationPage clickEntrance() throws InterruptedException {
+        click(entrance);
+        return new AuthorizationPage(driver);
     }
 
 }

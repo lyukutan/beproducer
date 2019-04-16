@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ScreenshotHelper {
 
     @Attachment(value = "Page screenshot", type = "image/png")
-    public static byte[] makeScreenshot(WebDriver driver){
+    static byte[] makeScreenshot(WebDriver driver){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             BufferedImage image = Shutterbug.shootPage(driver, ScrollStrategy.WHOLE_PAGE_CHROME).getImage();
