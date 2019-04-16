@@ -2,7 +2,11 @@ package ru.cinemico.test.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import ru.cinemico.HamcrestHelper;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
@@ -14,7 +18,12 @@ public class ApplicationManager {
 
     protected WebDriver driver;
 
-
+    public void linkExists(String URLName) throws IOException {
+        HttpURLConnection.setFollowRedirects(false);
+        HttpURLConnection con = (HttpURLConnection) new URL(URLName).openConnection();
+        con.setRequestMethod("HEAD");
+        HamcrestHelper.assertThat("Проверка, что HTTP Status-Code 200: OK", con.getResponseCode() == HttpURLConnection.HTTP_OK);
+    }
 
     public void init() {
         System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");

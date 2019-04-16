@@ -6,18 +6,23 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 public class AuthorizationTest extends TestBase  {
 
-    @Epic("базовые проверки")
+    @Epic("Базовые проверки")
     @Feature("Авторизация в системе")
     @Test(description = "Проверка доступности веб-интерфейса")
     @Description(
-            "•\tОткрыть браузер  и развернуть на весь экран. \n" +
-            "•\tПерейти в Веб-приложение\n" +
-            "•\tПроверить доступность элементов на главной странице\t\t\n")
+            "•Открыть браузер  и развернуть на весь экран.\n" +
+            "•Перейти в Веб-приложение\n" +
+            "•Проверить статус код полученный при переходе по URL\n" +
+            "•Проверить доступность элементов на главной странице\n")
     @Issue("-")
-    public void AvailabilityWebInterface(){
+    public void AvailabilityWebInterface() throws IOException {
+        applicationManager.linkExists("https://frontend.beproducer.pro/main");
         applicationManager.mainPage.checkEnabledFields();
+
     }
 
 }

@@ -28,7 +28,7 @@ public final class HamcrestAllureReporter {
         }
 
         description.appendText("checking that ").appendDescriptionOf(matcher);
-        String json = HamcrestHelper.serializeObj(actual, LOGGER.isDebugEnabled());
+        String json = HamcrestHelper.serializeObj(actual, LOGGER.isInfoEnabled());
         if (json.length() >= 20 && !json.equals("Значение скрыто согласно текущему уровню логирования.")) {
             addAssertDescription(description, json, reason, actual, matcher);
         } else {
