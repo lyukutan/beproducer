@@ -1,10 +1,8 @@
-package ru.yandex.test.tests;
+package ru.cinemico.test.tests;
 
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-import ru.yandex.test.appmanager.ApplicationManager;
+import ru.cinemico.test.appmanager.ApplicationManager;
 
 public class TestBase {
 

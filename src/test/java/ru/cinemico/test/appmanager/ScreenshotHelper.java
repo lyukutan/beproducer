@@ -1,7 +1,6 @@
-package ru.yandex.test.appmanager;
+package ru.cinemico.test.appmanager;
 
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
-import com.assertthat.selenium_shutterbug.utils.web.ScrollStrategy;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.WebDriver;
 
