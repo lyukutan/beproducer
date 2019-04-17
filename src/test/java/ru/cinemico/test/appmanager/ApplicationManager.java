@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
 
     public final static int IMPLICITY_WAIT = 5;
-    public final static int WAIT_SLEEP = 1500; // milisec
+    public final static int WAIT_SLEEP = 2000; // milisec
 
 
     public AuthorizationPage authorizationPage;
@@ -35,6 +35,7 @@ public class ApplicationManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        ScreenshotHelper.makeScreenshot(driver);
     }
 
 

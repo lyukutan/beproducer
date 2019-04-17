@@ -71,6 +71,7 @@ public class AuthorizationPage extends Checks {
     public AuthorizationPage fillFields(String email, String pass){
         authorizeEmail.sendKeys(email);
         authorizePassword.sendKeys(pass);
+        ScreenshotHelper.makeScreenshot(driver);
         return new AuthorizationPage(driver);
     }
 
@@ -78,12 +79,15 @@ public class AuthorizationPage extends Checks {
     public MainPage clickCloseAuthorization() throws InterruptedException {
         click(close, 2); /** Страница не успевает прогружаться*/
         assertThat("Окно авторизации закрыто и не отображается", !isDisplayed(modalAuth));
+        ScreenshotHelper.makeScreenshot(driver);
         return new MainPage(driver);
     }
 
     @Step("Окно авторизации отображается")
     public AuthorizationPage checkModalAuthIsDisplayes() throws InterruptedException {
         assertThat("Окно авторизации отображается", isDisplayed(modalAuth));
+        Thread.sleep(WAIT_SLEEP);
+        ScreenshotHelper.makeScreenshot(driver);
         return new AuthorizationPage(driver);
     }
 
@@ -95,10 +99,12 @@ public class AuthorizationPage extends Checks {
             assertThat("Перешли на страницу Персонала (проверка url)", driver.getCurrentUrl().equals(URL + "personal/info"));
             linkExists(URL);
             //todo проверка появления страницы взависимости от роли
+
+            ScreenshotHelper.makeScreenshot(driver);
             return new PersonalPage(driver);
         } else {
             assertThat("Проверить, что система не приняла некорректные данные", authorizeFail.isDisplayed());
-            //driver.close();
+            ScreenshotHelper.makeScreenshot(driver);
             return new PersonalPage(null);
         }
     }
@@ -106,8 +112,9 @@ public class AuthorizationPage extends Checks {
     @Step("Переход на форму восстановления пароля")
     public AuthorizationPage clickRestoreEmail() throws InterruptedException {
         click(restorePass);
-        assertThat("Проверить, что открылась форма для восстановления пороля", restoreAuthorizeEmail.isDisplayed());
+        assertThat("Проверить, что открылась форма для восстановления пароля", isDisplayed(restoreAuthorizeEmail));
         assertThat("Проверка, что система сообщение об ошибке скрыта", !isDisplayed(failFormAuthRestore));
+        ScreenshotHelper.makeScreenshot(driver);
         return new AuthorizationPage(driver);
     }
 
@@ -121,6 +128,7 @@ public class AuthorizationPage extends Checks {
         } else {
             assertThat("Проверить, что система не приняла некорректные данные", failFormAuthRestore.isDisplayed());
         }
+        ScreenshotHelper.makeScreenshot(driver);
         return new AuthorizationPage(driver);
     }
 

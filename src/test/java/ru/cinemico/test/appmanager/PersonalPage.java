@@ -26,6 +26,7 @@ public class PersonalPage extends Checks {
     public MainPage clickLogout() throws InterruptedException {
         click(logout);
         assertThat("Перешли на главную страницу (проверка url)", driver.getCurrentUrl().equals(URL + "main"));
+        ScreenshotHelper.makeScreenshot(driver);
         return new MainPage(driver);
     }
 

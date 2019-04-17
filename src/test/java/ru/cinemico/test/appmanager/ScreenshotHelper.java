@@ -1,7 +1,6 @@
 package ru.cinemico.test.appmanager;
 
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
-import com.assertthat.selenium_shutterbug.utils.web.ScrollStrategy;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.WebDriver;
 
@@ -16,7 +15,7 @@ public class ScreenshotHelper {
     static byte[] makeScreenshot(WebDriver driver){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            BufferedImage image = Shutterbug.shootPage(driver, ScrollStrategy.WHOLE_PAGE_CHROME).getImage();
+            BufferedImage image = Shutterbug.shootPage(driver/*, ScrollStrategy.WHOLE_PAGE_CHROME*/).getImage();
             ImageIO.write(image, "png", baos);
             baos.flush();
         }
