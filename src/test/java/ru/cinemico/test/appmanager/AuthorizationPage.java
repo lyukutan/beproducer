@@ -47,7 +47,6 @@ public class AuthorizationPage extends Checks {
     @FindBy(xpath = "//div[@class='form-authorize__submit']")
     private WebElement authorizeSubmit;
 
-
     @FindBy(xpath = "//div[contains(@class, 'modal--auth')]")
     private WebElement modalAuth;
 
