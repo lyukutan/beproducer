@@ -1,5 +1,6 @@
 package ru.cinemico.test.appmanager;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,24 +49,22 @@ public class AuthorizationPage extends Checks {
     @FindBy(xpath = "//div[contains(@class, 'modal--auth')]")
     private WebElement modalAuth;
 
-    /**
-     * Заполнение полей авторизации
-     * @param email почта
-     * @param pass пароль
-     * @return
-     */
+
+    @Step("Заполнение полей авторизации")
     public AuthorizationPage fillFields(String email, String pass){
         authorizeEmail.sendKeys(email);
         authorizePassword.sendKeys(pass);
         return new AuthorizationPage(driver);
     }
 
+    @Step("Закрытие окна авторизации")
     public MainPage clickCloseAuthorization() throws InterruptedException {
         click(close, 2); /** Страница не успевает прогружаться*/
         assertThat("Окно авторизации закрыто и не отображается", !isDisplayed(modalAuth));
         return new MainPage(driver);
     }
 
+    @Step("Нажатие кнопки Войти в окне авторизации")
     public PersonalPage clickSubmitAuthorization(String role, Boolean flag) throws IOException, InterruptedException {
         click(authorizeSubmit);
         if (flag){

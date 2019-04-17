@@ -64,7 +64,6 @@ public class MainPage extends Checks {
                 && toLowerCase(footerMenuLink.get(1).getText()).equals("новости и аналитика")
                 && toLowerCase(footerMenuLink.get(2).getText()).equals("связаться с нами")
                 && toLowerCase(footerMenuLink.get(3).getText()).equals("контакты"));
-        ScreenshotHelper.makeScreenshot(driver);
         return new MainPage(driver);
     }
 

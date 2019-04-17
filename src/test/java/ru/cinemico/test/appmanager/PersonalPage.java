@@ -1,5 +1,6 @@
 package ru.cinemico.test.appmanager;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,7 @@ public class PersonalPage extends Checks {
     @FindBy(xpath = "//a[contains(@class, 'logout')]")
     private WebElement logout;
 
+    @Step("Выход из Личного Кабинета")
     public MainPage clickLogout() throws InterruptedException {
         click(logout);
         assertThat("Перешли на главную страницу (проверка url)", driver.getCurrentUrl().equals(URL + "main"));

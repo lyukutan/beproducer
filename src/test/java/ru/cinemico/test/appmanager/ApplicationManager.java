@@ -2,6 +2,7 @@ package ru.cinemico.test.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestResult;
 import ru.cinemico.test.tests.TestBase;
 
 import java.util.concurrent.TimeUnit;
@@ -36,7 +37,11 @@ public class ApplicationManager {
         }
     }
 
-    public void stop() {
+
+    public void stop(ITestResult result) {
+        if(result.FAILURE == result.getStatus()){
+            ScreenshotHelper.makeScreenshot(driver);
+        }
         driver.close();
     }
 
