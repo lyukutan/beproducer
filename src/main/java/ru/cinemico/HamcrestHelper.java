@@ -6,32 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.*;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.StringDescription;
 import org.hamcrest.core.Is;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
 
 public final class HamcrestHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(HamcrestHelper.class);
     private static final ObjectWriter JSON_WRITER = (new ObjectMapper()).writer().withDefaultPrettyPrinter();
 
     private HamcrestHelper() {
-    }
-
-    public static <T> Matcher<T> hasGraph(String graphPath, Matcher<T> matcher) {
-        List<String> properties = Arrays.asList(graphPath.split("\\."));
-        ListIterator<String> iterator = properties.listIterator(properties.size());
-
-        Matcher ret;
-        for(ret = matcher; iterator.hasPrevious(); ret = Matchers.hasProperty((String)iterator.previous(), ret)) {
-            ;
-        }
-
-        return ret;
     }
 
     public static <T> void assertThat(T actual, Matcher<? super T> matcher) {

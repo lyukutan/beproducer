@@ -96,4 +96,28 @@ public class AuthorizationTest extends TestBase  {
                 .clickLogout()
                 .checkEnabledFields();
     }
+
+    @Epic(EPIC_BASIC_SCENARIO)
+    @Feature(FEATURE_AUTHORIZATION)
+    @Test(dataProvider = "otherUsersDP", description = "Проверка восстановления пароля")
+    @Description("Открыть браузер  и развернуть на весь экран\n"           +
+            "Перейти в Веб-приложение\n"                                   +
+            "Переход на форму авторизации\n" +
+            "Нажатие на ссылку 'Напомнить?'\n" +
+            "Заполнить обьязательные поля и нажать Восстановить\n" +
+            "Проверка появившегося окна/сообщение об ошибке\n" +
+            "Закрыть форму - перейти в главное меню\n" +
+            "Повторно зайти на панель напоминания пароля\n" +
+            "Проверка \"чистоты\" формы"                               )
+    @Issue("-")
+    public void restorePasswordEmail(String login, String pass, String role, Boolean niceOrNegativeUser) throws InterruptedException {
+        applicationManager
+                .mainPage.clickEntrance()
+                .clickRestoreEmail()
+                .fillFieldsForRestoreEmail(login, niceOrNegativeUser)
+                .clickCloseAuthorization()
+                .clickEntrance()
+                .checkModalAuthIsDisplayes()
+                .clickRestoreEmail();
+    }
 }

@@ -16,6 +16,8 @@ import static ru.cinemico.test.tests.TestBase.URL;
 public class AuthorizationPage extends Checks {
     private WebDriver driver;
 
+    private final String textBlockSuccessRestoreAuth = "На ваш электронный адрес выслана ссылка для подтверждения. Перейдите по ней, чтобы сбросить пароль.";
+
     public AuthorizationPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
@@ -49,6 +51,21 @@ public class AuthorizationPage extends Checks {
     @FindBy(xpath = "//div[contains(@class, 'modal--auth')]")
     private WebElement modalAuth;
 
+    @FindBy(xpath = "//a[@class='form-authorize__forget-link']")
+    private WebElement restorePass;
+
+    @FindBy(xpath = "//input[@id='form-restore-password-email']")
+    private WebElement restoreAuthorizeEmail;
+
+    @FindBy(xpath = "//button[.='Восстановить']")
+    private WebElement restoreButton;
+
+    @FindBy(xpath = "//div[@class='form-authorize__fail ng-star-inserted']")
+    private WebElement failFormAuthRestore;
+
+    @FindBy(xpath = "//div[@class='form-authorize__success ng-star-inserted']")
+    private WebElement blockSuccessRestoreAuth;
+
 
     @Step("Заполнение полей авторизации")
     public AuthorizationPage fillFields(String email, String pass){
@@ -62,6 +79,12 @@ public class AuthorizationPage extends Checks {
         click(close, 2); /** Страница не успевает прогружаться*/
         assertThat("Окно авторизации закрыто и не отображается", !isDisplayed(modalAuth));
         return new MainPage(driver);
+    }
+
+    @Step("Окно авторизации отображается")
+    public AuthorizationPage checkModalAuthIsDisplayes() throws InterruptedException {
+        assertThat("Окно авторизации отображается", isDisplayed(modalAuth));
+        return new AuthorizationPage(driver);
     }
 
     @Step("Нажатие кнопки Войти в окне авторизации")
@@ -79,4 +102,27 @@ public class AuthorizationPage extends Checks {
             return new PersonalPage(null);
         }
     }
+
+    @Step("Переход на форму восстановления пароля")
+    public AuthorizationPage clickRestoreEmail() throws InterruptedException {
+        click(restorePass);
+        assertThat("Проверить, что открылась форма для восстановления пороля", restoreAuthorizeEmail.isDisplayed());
+        assertThat("Проверка, что система сообщение об ошибке скрыта", !isDisplayed(failFormAuthRestore));
+        return new AuthorizationPage(driver);
+    }
+
+    @Step("Заполнение полей для восстановления пороля")
+    public AuthorizationPage fillFieldsForRestoreEmail(String email, Boolean flag) throws InterruptedException {
+        restoreAuthorizeEmail.sendKeys(email);
+        click(restoreButton);
+        if (flag){
+            assertThat("Проверить, что система приняла email и вывела текст с инструкцией", blockSuccessRestoreAuth.isDisplayed());
+            assertThat("Проверить, текста инструкции",  blockSuccessRestoreAuth.getText().equals(textBlockSuccessRestoreAuth));
+        } else {
+            assertThat("Проверить, что система не приняла некорректные данные", failFormAuthRestore.isDisplayed());
+        }
+        return new AuthorizationPage(driver);
+    }
+
+
 }
