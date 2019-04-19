@@ -39,7 +39,7 @@ public class AuthorizationTest extends TestBase  {
     @Issue("-")
     public void availabilityWebInterface() throws IOException {
         linkExists(URL);
-        applicationManager.mainPage.checkEnabledFields();
+        applicationManager.mainPage.checkEnabledFieldsMainPage();
     }
 
 
@@ -94,7 +94,7 @@ public class AuthorizationTest extends TestBase  {
                 .fillFields(login, pass)
                 .clickSubmitAuthorization(role, niceOrNegativeUser)
                 .clickLogout()
-                .checkEnabledFields();
+                .checkEnabledFieldsMainPage();
     }
 
     @Epic(EPIC_BASIC_SCENARIO)

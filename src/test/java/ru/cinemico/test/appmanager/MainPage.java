@@ -12,6 +12,7 @@ import java.util.List;
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
 import static ru.cinemico.HamcrestHelper.assertThat;
 
+
 public class MainPage extends Checks {
     private WebDriver driver;
 
@@ -53,8 +54,31 @@ public class MainPage extends Checks {
     @FindBy(xpath = "//a[@class='footer__menu-link']")
     private List<WebElement> footerMenuLink;
 
-    @Step("Проверка видимости полей")
-    public MainPage checkEnabledFields(){
+    @FindBy(xpath = "//div[@class='header-inner']")
+    private WebElement headerNotMain;
+
+    @FindBy(xpath = "//div[@class='page__content']")
+    private WebElement contetnFAQ;
+
+    @FindBy(xpath = "//div[@class='contacts__map']")
+    private WebElement contactsMap;
+
+    @FindBy(xpath = "//div[@class='contacts']")
+    private WebElement contacts;
+
+    @FindBy(xpath = "//div[contains(@class, 'project-banners')]")
+    private List<WebElement> projectBanners;
+
+    @FindBy(xpath = "//div[@class='page__content _with-sidebar']")
+    private WebElement contentProject;
+
+    @FindBy(xpath = "//div[@class='page__inner']")
+    private WebElement errorPage;
+
+
+    @Step("Проверка видимости полей на главной странице")
+    public MainPage checkEnabledFieldsMainPage(){
+        assertThat("Нет сообщения 404 NOT FOUND", !isDisplayed(errorPage) || (isDisplayed(errorPage) && !errorPage.getText().contains("404 NOT FOUND")));
         assertThat("Проверка видимости логотипа", headerLogo.isEnabled());
         assertThat("Проверка видимости кнопки \"Вход\"",  entrance.isEnabled());
         assertThat("Проверка видимости кнопки \"Язык\"",  headerLanguages.isEnabled());
@@ -64,6 +88,39 @@ public class MainPage extends Checks {
                 && toLowerCase(footerMenuLink.get(1).getText()).equals("новости и аналитика")
                 && toLowerCase(footerMenuLink.get(2).getText()).equals("связаться с нами")
                 && toLowerCase(footerMenuLink.get(3).getText()).equals("контакты"));
+        assertThat("На главной странице нет header-inner",  !isDisplayed(headerNotMain));
+        ScreenshotHelper.makeScreenshot(driver);
+        return new MainPage(driver);
+    }
+
+    @Step("Проверка видимости полей на странице FAQ")
+    public MainPage checkGetFAQ(){
+        assertThat("Нет сообщения 404 NOT FOUND", !isDisplayed(errorPage) || (isDisplayed(errorPage) && !errorPage.getText().contains("404 NOT FOUND")));
+        assertThat("На странице есть header-inner",  isDisplayed(headerNotMain));
+        assertThat("На странице есть контент",  isDisplayed(contetnFAQ));
+        assertThat("Проверка заголовка страницы", contetnFAQ.getText().contains("ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ"));
+        ScreenshotHelper.makeScreenshot(driver);
+        return new MainPage(driver);
+    }
+
+    @Step("Проверка видимости полей на странице контактов организации")
+    public MainPage checkGetContacts(){
+        assertThat("Нет сообщения 404 NOT FOUND", !isDisplayed(errorPage) || (isDisplayed(errorPage) && !errorPage.getText().contains("404 NOT FOUND")));
+        assertThat("На странице есть header-inner",  isDisplayed(headerNotMain));
+        assertThat("На странице загрузилась карта",  isDisplayed(contactsMap));
+        assertThat("Проверка заголовка страницы", contacts.getText().contains("КОНТАКТЫ"));
+        ScreenshotHelper.makeScreenshot(driver);
+        return new MainPage(driver);
+    }
+
+
+    @Step("Проверка видимости полей на странице одного проекта")
+    public MainPage checkGetProject() {
+        assertThat("Нет сообщения 404 NOT FOUND", !isDisplayed(errorPage) || (isDisplayed(errorPage) && !errorPage.getText().contains("404 NOT FOUND")));
+        assertThat("На странице нету header-inner",  !isDisplayed(headerNotMain));
+        assertThat("На странице имеются баннеры",  projectBanners.size() > 0);
+        assertThat("На странице есть контент",  isDisplayed(contentProject));
+        assertThat("Проверка заголовка контента", contentProject.getText().contains("ОПИСАНИЕ ПРОЕКТА"));
         ScreenshotHelper.makeScreenshot(driver);
         return new MainPage(driver);
     }
